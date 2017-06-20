@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 	topImage: DisplayImage;
 	bottomImage: DisplayImage;
 	countdownMinutes: number;
-	countdownSeconds: number;
+	countdownSeconds: string;
 
 	private switch = true;
 	private changeImageTimeout: any;
@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
 			.subscribe((data) => {
 				let countdown = data.json().countdown;
 				this.countdownMinutes = Math.floor(countdown / 60);
-				this.countdownSeconds = countdown % 60;
+				this.countdownSeconds = ('0000'+countdown % 60).slice(-2);
 			});
 	}
 }

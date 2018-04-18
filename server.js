@@ -10,11 +10,35 @@ app.get('/images.json', function (req, res) {
 	dir.files('images', function (err, files) {
 		result = [];
 		files.forEach(file => {
-			result.push(file.replace(/\\/g, "/"));
+			if (file.toUpperCase().endsWith(".JPG")) {
+				result.push(file.replace(/\\/g, "/"));
+			}
+			
 		});
+		result = shuffle(result);
 		res.send(result);
 	});
 });
+
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
+}
 
 var isDisplayOff = false;
 
@@ -60,7 +84,7 @@ app.get('/display-on-timer', function (req, res) {
 });
 
 app.get('/countdown.json', function (req, res) {
-	res.send({countdown});
+	res.send({ countdown });
 });
 
 app.get('/', function (req, res) {

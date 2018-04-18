@@ -11,6 +11,8 @@ import { DisplayImage } from "app/_models/display-image";
 export class AppComponent implements OnInit {
 
 	private allImages = [];
+	private imageNumber = 0;
+
 	topImage: DisplayImage;
 	bottomImage: DisplayImage;
 	countdownMinutes: number;
@@ -37,8 +39,8 @@ export class AppComponent implements OnInit {
 			.subscribe((data) => {
 				this.allImages = data.json();
 
-				this.topImage = new DisplayImage(this.allImages[this.getRandomNumber()]);
-				this.bottomImage = new DisplayImage(this.allImages[this.getRandomNumber()]);
+				this.topImage = new DisplayImage(this.allImages[this.getImageNumber()]);
+				this.bottomImage = new DisplayImage(this.allImages[this.getImageNumber()]);
 
 				this.changeImages();
 			});
@@ -52,10 +54,10 @@ export class AppComponent implements OnInit {
 
 	private changeImages(): void {
 		if (this.switch) {
-			this.topImage = new DisplayImage(this.allImages[this.getRandomNumber()]);
+			this.topImage = new DisplayImage(this.allImages[this.getImageNumber()]);
 		}
 		else {
-			this.bottomImage = new DisplayImage(this.allImages[this.getRandomNumber()]);
+			this.bottomImage = new DisplayImage(this.allImages[this.getImageNumber()]);
 		}
 
 		this.switch = !this.switch;
@@ -65,13 +67,12 @@ export class AppComponent implements OnInit {
 		}, 7 * 1000);
 	}
 
-	private getRandomNumber(): number {
-		return this.randomIntFromInterval(0, this.allImages.length - 1)
-	}
+	private getImageNumber(): number {
+		if (this.imageNumber++ >= this.allImages.length) {
+			this.imageNumber = 0;
+		}
 
-	private randomIntFromInterval(min, max): number {
-		let number = Math.floor(Math.random() * (max - min + 1) + min);
-		return number;
+		return this.imageNumber;
 	}
 
 	// Gets the countdown value from nodejs (server.js) with the seconds the screen will be on

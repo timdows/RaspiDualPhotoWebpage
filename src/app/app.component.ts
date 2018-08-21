@@ -45,11 +45,11 @@ export class AppComponent implements OnInit {
 				this.changeImages();
 			});
 
-		setTimeout(() => {
-			// Cancel the existing timeout
-			clearTimeout(this.changeImageTimeout);
-			this.getAvailableImages();
-		}, 60 * 60 * 1000);
+		// setTimeout(() => {
+		// 	// Cancel the existing timeout
+		// 	clearTimeout(this.changeImageTimeout);
+		// 	this.getAvailableImages();
+		// }, 60 * 60 * 1000);
 	}
 
 	private changeImages(): void {
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
 
 	private getImageNumber(): number {
 		if (this.imageNumber++ >= this.allImages.length) {
+			this.getAvailableImages();
 			this.imageNumber = 0;
 		}
 

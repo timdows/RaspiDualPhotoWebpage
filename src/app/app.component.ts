@@ -44,12 +44,6 @@ export class AppComponent implements OnInit {
 
 				this.changeImages();
 			});
-
-		// setTimeout(() => {
-		// 	// Cancel the existing timeout
-		// 	clearTimeout(this.changeImageTimeout);
-		// 	this.getAvailableImages();
-		// }, 60 * 60 * 1000);
 	}
 
 	private changeImages(): void {

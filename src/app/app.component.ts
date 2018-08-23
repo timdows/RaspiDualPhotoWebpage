@@ -39,8 +39,10 @@ export class AppComponent implements OnInit {
 			.subscribe((data) => {
 				this.allImages = data.json();
 
-				this.topImage = new DisplayImage(this.allImages[this.getImageNumber()]);
-				this.bottomImage = new DisplayImage(this.allImages[this.getImageNumber()]);
+				let topImageNumber = this.getImageNumber();
+				let bottomImageNumber = this.getImageNumber();
+				this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber}/${this.allImages.length}`);
+				this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber}/${this.allImages.length}`);
 
 				this.changeImages();
 			});
@@ -48,10 +50,12 @@ export class AppComponent implements OnInit {
 
 	private changeImages(): void {
 		if (this.switch) {
-			this.topImage = new DisplayImage(this.allImages[this.getImageNumber()]);
+			let topImageNumber = this.getImageNumber();
+			this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber}/${this.allImages.length}`);
 		}
 		else {
-			this.bottomImage = new DisplayImage(this.allImages[this.getImageNumber()]);
+			let bottomImageNumber = this.getImageNumber();
+			this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber}/${this.allImages.length}`);
 		}
 
 		this.switch = !this.switch;

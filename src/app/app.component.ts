@@ -66,7 +66,8 @@ export class AppComponent implements OnInit {
 	}
 
 	private getImageNumber(): number {
-		if (this.imageNumber++ >= this.allImages.length) {
+		this.imageNumber++;
+		if (this.imageNumber >= this.allImages.length) {
 			this.getAvailableImages();
 			this.imageNumber = 0;
 		}

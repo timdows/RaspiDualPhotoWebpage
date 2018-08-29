@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Configuration } from "app/app.configuration";
+// import { Configuration } from "app/app.configuration";
 import { Http } from "@angular/http";
 import { DisplayImage } from "app/_models/display-image";
 
@@ -19,10 +19,10 @@ export class AppComponent implements OnInit {
 	countdownSeconds: string;
 
 	private switch = true;
-	private changeImageTimeout: any;
+	//private changeImageTimeout: any;
 
 	constructor(
-		private configuration: Configuration,
+		//private configuration: Configuration,
 		private http: Http) { }
 
 	ngOnInit(): void {
@@ -32,6 +32,10 @@ export class AppComponent implements OnInit {
 		setInterval(() => {
 			this.getCountdown();
 		}, 1000);
+		// Change image every 7 seconds
+		setInterval(() => {
+			this.changeImages();
+		}, 7000);
 	}
 
 	private getAvailableImages(): void {
@@ -44,7 +48,7 @@ export class AppComponent implements OnInit {
 				this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber}/${this.allImages.length}`);
 				this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber}/${this.allImages.length}`);
 
-				this.changeImages();
+				//this.changeImages();
 			});
 	}
 
@@ -60,9 +64,9 @@ export class AppComponent implements OnInit {
 
 		this.switch = !this.switch;
 
-		this.changeImageTimeout = setTimeout(() => {
-			this.changeImages();
-		}, 7 * 1000);
+		// this.changeImageTimeout = setTimeout(() => {
+		// 	this.changeImages();
+		// }, 7 * 1000);
 	}
 
 	private getImageNumber(): number {

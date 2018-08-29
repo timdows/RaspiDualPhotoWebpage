@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { Configuration } from "app/app.configuration";
 import { Http } from "@angular/http";
 import { DisplayImage } from "app/_models/display-image";
 
@@ -19,11 +18,8 @@ export class AppComponent implements OnInit {
 	countdownSeconds: string;
 
 	private switch = true;
-	//private changeImageTimeout: any;
 
-	constructor(
-		//private configuration: Configuration,
-		private http: Http) { }
+	constructor(private http: Http) { }
 
 	ngOnInit(): void {
 		this.getAvailableImages();
@@ -47,8 +43,6 @@ export class AppComponent implements OnInit {
 				let bottomImageNumber = this.getImageNumber();
 				this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber}/${this.allImages.length}`);
 				this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber}/${this.allImages.length}`);
-
-				//this.changeImages();
 			});
 	}
 
@@ -63,10 +57,6 @@ export class AppComponent implements OnInit {
 		}
 
 		this.switch = !this.switch;
-
-		// this.changeImageTimeout = setTimeout(() => {
-		// 	this.changeImages();
-		// }, 7 * 1000);
 	}
 
 	private getImageNumber(): number {

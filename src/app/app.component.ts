@@ -10,7 +10,7 @@ import { DisplayImage } from "app/_models/display-image";
 export class AppComponent implements OnInit {
 
 	private allImages = [];
-	private imageNumber = 0;
+	private imageNumber = -1;
 
 	topImage: DisplayImage;
 	bottomImage: DisplayImage;
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
 	countdownSeconds: string;
 
 	private switch = true;
+	private firstRunCompleted = false;
 
 	constructor(private http: Http) { }
 
@@ -39,21 +40,22 @@ export class AppComponent implements OnInit {
 			.subscribe((data) => {
 				this.allImages = data.json();
 
-				let topImageNumber = this.getImageNumber();
-				let bottomImageNumber = this.getImageNumber();
-				this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber}/${this.allImages.length}`);
-				this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber}/${this.allImages.length}`);
+				if (!this.firstRunCompleted) {
+					this.firstRunCompleted = true;
+					this.changeImages();
+					this.changeImages();
+				}
 			});
 	}
 
 	private changeImages(): void {
 		if (this.switch) {
 			let topImageNumber = this.getImageNumber();
-			this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber}/${this.allImages.length}`);
+			this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber + 1}/${this.allImages.length}`);
 		}
 		else {
 			let bottomImageNumber = this.getImageNumber();
-			this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber}/${this.allImages.length}`);
+			this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber + 1}/${this.allImages.length}`);
 		}
 
 		this.switch = !this.switch;

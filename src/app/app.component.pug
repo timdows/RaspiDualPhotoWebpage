@@ -1,10 +1,18 @@
-.topRow(*ngIf="topImage")
-	.image([style.background-image]="topImage.url")
-.topRowText
-	h3 {{topImage?.directory}}
-.bottomRow(*ngIf="bottomImage")
-	.image([style.background-image]="bottomImage.url")
-.bottomRowText
-	h3 {{bottomImage?.directory}}
+.top-left([hidden]="!topLeftImage")
+	.image([style.background-image]="topLeftImage.url")
+	.imageText 
+		h3 {{topLeftImage.directory}}
+.top-right([hidden]="!topRightImage")
+	.image([style.background-image]="topRightImage.url")
+	.imageText 
+		h3 {{topRightImage.directory}}
+.bottom-left([hidden]="!bottomLeftImage")
+	.image([style.background-image]="bottomLeftImage.url")
+	.imageText 
+		h3 {{bottomLeftImage.directory}}
+.bottom-right([hidden]="!bottomRightImage")
+	.image([style.background-image]="bottomRightImage.url")
+	.imageText 
+		h3 {{bottomRightImage.directory}}
 .countdown
-	| (Top: {{topImage?.indexOfArrayDebugString}}) (Bottom: {{bottomImage?.indexOfArrayDebugString}}) {{countdownMinutes}}:{{countdownSeconds}}
+	| ({{countdownMinutes}}:{{countdownSeconds}}

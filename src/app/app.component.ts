@@ -12,12 +12,15 @@ export class AppComponent implements OnInit {
 	private allImages = [];
 	private imageNumber = -1;
 
-	topImage: DisplayImage;
-	bottomImage: DisplayImage;
+	topLeftImage: DisplayImage;
+	topRightImage: DisplayImage;
+	bottomLeftImage: DisplayImage;
+	bottomRightImage: DisplayImage;
 	countdownMinutes: number;
 	countdownSeconds: string;
 
 	private switch = true;
+	private imageSwitchNumber = 0;
 	private firstRunCompleted = false;
 
 	constructor(private http: Http) { }
@@ -44,21 +47,32 @@ export class AppComponent implements OnInit {
 					this.firstRunCompleted = true;
 					this.changeImages();
 					this.changeImages();
+					this.changeImages();
+					this.changeImages();
 				}
 			});
 	}
 
 	private changeImages(): void {
-		if (this.switch) {
-			let topImageNumber = this.getImageNumber();
-			this.topImage = new DisplayImage(this.allImages[topImageNumber], `${topImageNumber + 1}/${this.allImages.length}`);
+		let imageNumber = this.getImageNumber();
+
+		if (this.imageSwitchNumber == 0) {
+			this.topLeftImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
 		}
-		else {
-			let bottomImageNumber = this.getImageNumber();
-			this.bottomImage = new DisplayImage(this.allImages[bottomImageNumber], `${bottomImageNumber + 1}/${this.allImages.length}`);
+		else if (this.imageSwitchNumber == 1) {
+			this.topRightImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
+		}
+		else if (this.imageSwitchNumber == 2) {
+			this.bottomLeftImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
+		}
+		else if (this.imageSwitchNumber == 3) {
+			this.bottomRightImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
 		}
 
-		this.switch = !this.switch;
+		this.imageSwitchNumber++;
+		if (this.imageSwitchNumber == 4) {
+			this.imageSwitchNumber = 0;
+		}
 	}
 
 	private getImageNumber(): number {

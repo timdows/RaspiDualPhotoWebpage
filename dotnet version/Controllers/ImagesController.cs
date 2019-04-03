@@ -10,9 +10,9 @@ using System.IO;
 namespace RaspiDualPhotoWebpage.Controllers
 {
 	[Route("api/[controller]/[action]")]
-    [ApiController]
-    public class ImagesController : ControllerBase
-    {
+	[ApiController]
+	public class ImagesController : ControllerBase
+	{
 		private readonly AppSettings _appSettings;
 
 		public ImagesController(IOptions<AppSettings> appSettings)
@@ -34,6 +34,9 @@ namespace RaspiDualPhotoWebpage.Controllers
 					FileName = Path.GetFileName(filePath)
 				});
 			}
+
+			displayImages.Shuffle();
+
 			return Ok(displayImages);
 		}
 
@@ -77,7 +80,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 				image.Mutate(x => x
 					.Resize(newWidth, newHeight)
 					.AutoOrient());
-				
+
 				using (var outputStream = new FileStream(savePath, FileMode.CreateNew))
 				{
 					image.SaveAsJpeg(outputStream);
@@ -86,6 +89,8 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 			return savePath;
 		}
+
+
 	}
 
 	public class DisplayImage
@@ -93,5 +98,23 @@ namespace RaspiDualPhotoWebpage.Controllers
 		public string Url => $"api/images/getfile?file={Uri.EscapeDataString(DirectoryName)}/{Uri.EscapeDataString(FileName)}";
 		public string DirectoryName { get; set; }
 		public string FileName { get; set; }
+	}
+
+	public static class Helpers
+	{
+		private static Random rng = new Random();
+
+		public static void Shuffle<T>(this IList<T> list)
+		{
+			int n = list.Count;
+			while (n > 1)
+			{
+				n--;
+				int k = rng.Next(n + 1);
+				T value = list[k];
+				list[k] = list[n];
+				list[n] = value;
+			}
+		}
 	}
 }

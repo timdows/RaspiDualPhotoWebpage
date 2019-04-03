@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace RaspiDualPhotoWebpage.Controllers
 {
-    [Route("api/[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
     [ApiController]
     public class ImagesController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 				filePath.Replace(_appSettings.ImageLocationPath, string.Empty);
 				displayImages.Add(new DisplayImage
 				{
-					DirecotryName = Path.GetFileName(Path.GetDirectoryName(filePath)),
+					DirectoryName = Path.GetFileName(Path.GetDirectoryName(filePath)),
 					FileName = Path.GetFileName(filePath)
 				});
 			}
@@ -39,15 +39,59 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 		public IActionResult GetFile([FromQuery]string file)
 		{
-			var path = Path.Combine(_appSettings.ImageLocationPath, file);
+			var resizedPath = Path.Combine(_appSettings.ResizedImagesPath, file);
+			if (System.IO.File.Exists(resizedPath))
+			{
+				return PhysicalFile(resizedPath, "image/jpeg");
+			}
+
+			var originalPath = Path.Combine(_appSettings.ImageLocationPath, file);
+			if (!System.IO.File.Exists(originalPath))
+			{
+				return BadRequest("Image does not exist");
+			}
+
+			var path = ScaleImage(originalPath, _appSettings.ResizedImagesPath, _appSettings.MaxImageSize);
+
 			return PhysicalFile(path, "image/jpeg");
+		}
+
+		public static string ScaleImage(string imagePath, string saveDirectory, int maxSize)
+		{
+			var fileName = Path.GetFileName(imagePath);
+			var imageDirectoryName = Path.GetFileName(Path.GetDirectoryName(imagePath));
+			var saveDirectoryWithSubdir = Path.Combine(saveDirectory, imageDirectoryName);
+			Directory.CreateDirectory(saveDirectoryWithSubdir);
+
+			var savePath = Path.Combine(saveDirectoryWithSubdir, fileName);
+
+			using (Image<Rgba32> image = Image.Load(imagePath))
+			{
+				var ratioX = (double)maxSize / image.Width;
+				var ratioY = (double)maxSize / image.Height;
+				var ratio = Math.Min(ratioX, ratioY);
+
+				var newWidth = (int)(image.Width * ratio);
+				var newHeight = (int)(image.Height * ratio);
+
+				image.Mutate(x => x
+					.Resize(newWidth, newHeight)
+					.AutoOrient());
+				
+				using (var outputStream = new FileStream(savePath, FileMode.CreateNew))
+				{
+					image.SaveAsJpeg(outputStream);
+				}
+			}
+
+			return savePath;
 		}
 	}
 
 	public class DisplayImage
 	{
-		public string Url => $"api/images/getfile?file={DirecotryName}/{FileName}";
-		public string DirecotryName { get; set; }
+		public string Url => $"api/images/getfile?file={Uri.EscapeDataString(DirectoryName)}/{Uri.EscapeDataString(FileName)}";
+		public string DirectoryName { get; set; }
 		public string FileName { get; set; }
 	}
 }

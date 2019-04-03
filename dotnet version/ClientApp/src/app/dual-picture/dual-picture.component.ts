@@ -9,7 +9,7 @@ import { DisplayImage } from '../DisplayImage';
 })
 export class DualPictureComponent implements OnInit {
 
-  private allImages = [];
+  private displayImages = Array<DisplayImage>();
   private imageNumber = -1;
 
   topLeftImage: DisplayImage;
@@ -40,9 +40,9 @@ export class DualPictureComponent implements OnInit {
   }
 
   private getAvailableImages(): void {
-    this.http.get("images.json")
+    this.http.get("api/images/getimages")
       .subscribe((data) => {
-        //this.allImages = data.json();
+        this.displayImages = data as Array<DisplayImage>;
 
         if (!this.firstRunCompleted) {
           this.firstRunCompleted = true;
@@ -58,16 +58,16 @@ export class DualPictureComponent implements OnInit {
     let imageNumber = this.getImageNumber();
 
     if (this.imageSwitchNumber == 0) {
-      this.topLeftImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
+      this.topLeftImage = this.displayImages[imageNumber];
     }
     else if (this.imageSwitchNumber == 1) {
-      this.topRightImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
+      this.topRightImage = this.displayImages[imageNumber];
     }
     else if (this.imageSwitchNumber == 2) {
-      this.bottomLeftImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
+      this.bottomLeftImage = this.displayImages[imageNumber];
     }
     else if (this.imageSwitchNumber == 3) {
-      this.bottomRightImage = new DisplayImage(this.allImages[imageNumber], `${imageNumber + 1}/${this.allImages.length}`);
+      this.bottomRightImage = this.displayImages[imageNumber];
     }
 
     this.imageSwitchNumber++;
@@ -78,7 +78,7 @@ export class DualPictureComponent implements OnInit {
 
   private getImageNumber(): number {
     this.imageNumber++;
-    if (this.imageNumber >= this.allImages.length) {
+    if (this.imageNumber >= this.displayImages.length) {
       this.getAvailableImages();
       this.imageNumber = 0;
     }

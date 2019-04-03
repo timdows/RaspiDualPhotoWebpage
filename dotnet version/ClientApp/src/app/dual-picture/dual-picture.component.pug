@@ -1,18 +1,18 @@
 .top-left(*ngIf="topLeftImage")
-	.image([style.background-image]="topLeftImage.url")
+	.image([style.background-image]="'url(' + topLeftImage.url + ')'")
 	.imageText 
-		h3 {{topLeftImage.directory}}
+		h3 {{topLeftImage.directoryName}}
 .top-right(*ngIf="topRightImage")
-	.image([style.background-image]="topRightImage.url")
+	.image([style.background-image]="'url(' + topRightImage.url + ')'")
 	.imageText 
-		h3 {{topRightImage.directory}}
+		h3 {{topRightImage.directoryName}}
 .bottom-left(*ngIf="bottomLeftImage")
-	.image([style.background-image]="bottomLeftImage.url")
+	.image([style.background-image]="'url(' + bottomLeftImage.url + ')'")
 	.imageText 
-		h3 {{bottomLeftImage.directory}}
+		h3 {{bottomLeftImage.directoryName}}
 .bottom-right(*ngIf="bottomRightImage")
-	.image([style.background-image]="bottomRightImage.url")
+	.image([style.background-image]="'url(' + bottomRightImage.url + ')'")
 	.imageText 
-		h3 {{bottomRightImage.directory}}
+		h3 {{bottomRightImage.directoryName}}
 .countdown
-	| ({{countdownMinutes}}:{{countdownSeconds}}
+	| ({{countdownMinutes}}:{{countdownSeconds}})

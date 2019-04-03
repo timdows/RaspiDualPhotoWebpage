@@ -24,11 +24,18 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 			var secondsLeft = displayOnTimer - secondsRunning;
 
+			if (secondsLeft <= 0)
+			{
+				var output = "vcgencmd display_power 0".Bash();
+			}
+
 			return Ok(secondsLeft);
 		}
 		
 		public IActionResult DisplayOnTimer()
 		{
+			var output = "vcgencmd display_power 1".Bash();
+
 			_countdownTimer.DateTimeStarted = DateTime.Now;
 
 			return Ok("Executed");

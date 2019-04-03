@@ -6,6 +6,7 @@ using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace RaspiDualPhotoWebpage.Controllers
 {
@@ -54,11 +55,12 @@ namespace RaspiDualPhotoWebpage.Controllers
 				return BadRequest("Image does not exist");
 			}
 
-			var path = ScaleImage(originalPath, _appSettings.ResizedImagesPath, _appSettings.MaxImageSize);
+			//var path = ScaleImage(originalPath, _appSettings.ResizedImagesPath, _appSettings.MaxImageSize);
+			var path = ResizeImage(originalPath, _appSettings.ResizedImagesPath, _appSettings.MaxImageSize);
 
 			return PhysicalFile(path, "image/jpeg");
 		}
-
+		
 		public static string ScaleImage(string imagePath, string saveDirectory, int maxSize)
 		{
 			var fileName = Path.GetFileName(imagePath);
@@ -90,6 +92,20 @@ namespace RaspiDualPhotoWebpage.Controllers
 			return savePath;
 		}
 
+		public static string ResizeImage(string imagePath, string saveDirectory, int maxSize)
+		{
+			var fileName = Path.GetFileName(imagePath);
+			var imageDirectoryName = Path.GetFileName(Path.GetDirectoryName(imagePath));
+			var saveDirectoryWithSubdir = Path.Combine(saveDirectory, imageDirectoryName);
+			Directory.CreateDirectory(saveDirectoryWithSubdir);
+
+			var savePath = Path.Combine(saveDirectoryWithSubdir, fileName);
+
+			var command = $"convert '{imagePath}' -resize {maxSize} '{savePath}'";
+			var output = command.Bash();
+
+			return savePath;
+		}
 
 	}
 

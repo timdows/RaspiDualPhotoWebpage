@@ -19,3 +19,7 @@ sudo vcgencmd display_power 1
 ## Publish
 https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md
 dotnet publish -r linux-arm --self-contained -c Release
+
+## Resize
+sudo apt-get update
+sudo apt-get install imagemagick

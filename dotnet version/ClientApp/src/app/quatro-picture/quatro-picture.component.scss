@@ -1,0 +1,65 @@
+:host {
+}
+
+.top-left,
+.top-right,
+.bottom-left,
+.bottom-right {
+  position: fixed;
+  width: 50%;
+  height: 50%;
+  background-color: black;
+
+  > .image {
+    position: absolute;
+    height: 95%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .imageText {
+    position: absolute;
+    height: 5%;
+    width: 100%;
+    top: 95%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+
+    > h3 {
+      margin: 0;
+      color: white;
+      text-align: center;
+    }
+  }
+}
+
+.top-left { 
+	top:0;
+	left:0;
+}
+.top-right {
+	top:0;
+	left:50%;
+}
+.bottom-left { 
+	top:50%; 
+	left:0;
+}
+.bottom-right { 
+	top:50%; 
+	left:50%;
+}
+
+.countdown {
+	position: fixed;
+	bottom: 0%;
+	right: 0%;
+	color: white;
+	font-size: x-small;
+	padding-right: .5rem;
+	padding-bottom: .5rem;
+}

@@ -11,3 +11,7 @@ https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-Install-Node.j
 
 npm install express --save
 npm install node-dir --save
+
+## Display
+sudo chmod u+s /bin/chvt
+sudo vcgencmd display_power 1

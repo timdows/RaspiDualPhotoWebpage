@@ -12,15 +12,12 @@ export class DualPictureComponent implements OnInit {
   private displayImages = Array<DisplayImage>();
   private imageNumber = -1;
 
-  topLeftImage: DisplayImage;
-  topRightImage: DisplayImage;
-  bottomLeftImage: DisplayImage;
-  bottomRightImage: DisplayImage;
+  topImage: DisplayImage;
+  bottomImage: DisplayImage;
 
   countdownMinutes: number;
   countdownSeconds: string;
 
-  private switch = true;
   private imageSwitchNumber = 0;
   private firstRunCompleted = false;
 
@@ -58,20 +55,14 @@ export class DualPictureComponent implements OnInit {
     let imageNumber = this.getImageNumber();
 
     if (this.imageSwitchNumber == 0) {
-      this.topLeftImage = this.displayImages[imageNumber];
+      this.topImage = this.displayImages[imageNumber];
     }
     else if (this.imageSwitchNumber == 1) {
-      this.topRightImage = this.displayImages[imageNumber];
-    }
-    else if (this.imageSwitchNumber == 2) {
-      this.bottomLeftImage = this.displayImages[imageNumber];
-    }
-    else if (this.imageSwitchNumber == 3) {
-      this.bottomRightImage = this.displayImages[imageNumber];
+      this.bottomImage = this.displayImages[imageNumber];
     }
 
     this.imageSwitchNumber++;
-    if (this.imageSwitchNumber == 4) {
+    if (this.imageSwitchNumber == 2) {
       this.imageSwitchNumber = 0;
     }
   }
@@ -88,12 +79,12 @@ export class DualPictureComponent implements OnInit {
 
   // Gets the countdown value from nodejs (server.js) with the seconds the screen will be on
   private getCountdown(): void {
-    //this.http.get("countdown.json")
-    //  .subscribe((data) => {
-    //    let countdown = data.json().countdown;
-    //    this.countdownMinutes = Math.floor(countdown / 60);
-    //    this.countdownSeconds = ('0000' + countdown % 60).slice(-2);
-    //  });
+    this.http.get("api/control/getcountdown")
+      .subscribe((data) => {
+        let countdown = data as number;
+        this.countdownMinutes = Math.floor(countdown / 60);
+        this.countdownSeconds = ('0000' + countdown % 60).slice(-2);
+      });
   }
 
 }

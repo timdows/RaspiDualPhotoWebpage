@@ -1,1 +1,11 @@
-p hoi
+h1 Image management
+
+table
+    tr
+        th Directory
+        th Filename
+        th Is resized
+    tr(*ngFor="let displayImage of displayImages")
+        td {{displayImage.directoryName}}
+        td {{displayImage.fileName}}
+        td {{displayImage.isResized}}

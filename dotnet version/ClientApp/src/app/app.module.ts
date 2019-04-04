@@ -24,6 +24,7 @@ import { ImageManagementComponent } from './image-management/image-management.co
       { path: '', component: DualPictureComponent, pathMatch: 'full' },
       { path: 'dual', component: DualPictureComponent },
       { path: 'quatro', component: QuatroPictureComponent },
+      { path: 'imagemanagement', component: ImageManagementComponent },
     ])
   ],
   providers: [],

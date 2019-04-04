@@ -6,7 +6,6 @@ using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Drawing.Imaging;
 
 namespace RaspiDualPhotoWebpage.Controllers
 {
@@ -23,24 +22,13 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 		public IActionResult GetImages()
 		{
-			var displayImages = new List<DisplayImage>();
-
-			var filePaths = Directory.GetFiles(_appSettings.ImageLocationPath, "*.*", SearchOption.AllDirectories);
-			foreach (var filePath in filePaths)
-			{
-				filePath.Replace(_appSettings.ImageLocationPath, string.Empty);
-				displayImages.Add(new DisplayImage
-				{
-					DirectoryName = Path.GetFileName(Path.GetDirectoryName(filePath)),
-					FileName = Path.GetFileName(filePath)
-				});
-			}
-
+			var displayImages = Helpers.GetDisplayImages(_appSettings);
 			displayImages.Shuffle();
 
 			return Ok(displayImages);
 		}
 
+		[ResponseCache(NoStore = true, Duration = 0)]
 		public IActionResult GetFile([FromQuery]string file)
 		{
 			var resizedPath = Path.Combine(_appSettings.ResizedImagesPath, file);
@@ -61,7 +49,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 			return PhysicalFile(path, "image/jpeg");
 		}
 		
-		public static string ScaleImage(string imagePath, string saveDirectory, int maxSize)
+		private static string ScaleImage(string imagePath, string saveDirectory, int maxSize)
 		{
 			var fileName = Path.GetFileName(imagePath);
 			var imageDirectoryName = Path.GetFileName(Path.GetDirectoryName(imagePath));
@@ -92,14 +80,9 @@ namespace RaspiDualPhotoWebpage.Controllers
 			return savePath;
 		}
 
-		public static string ResizeImage(string imagePath, string saveDirectory, int maxSize)
+		private static string ResizeImage(string imagePath, string saveDirectory, int maxSize)
 		{
-			var fileName = Path.GetFileName(imagePath);
-			var imageDirectoryName = Path.GetFileName(Path.GetDirectoryName(imagePath));
-			var saveDirectoryWithSubdir = Path.Combine(saveDirectory, imageDirectoryName);
-			Directory.CreateDirectory(saveDirectoryWithSubdir);
-
-			var savePath = Path.Combine(saveDirectoryWithSubdir, fileName);
+			var savePath = Helpers.GetSaveResizePath(imagePath, saveDirectory);
 
 			var command = $"convert '{imagePath}' -resize {maxSize} '{savePath}'";
 			var output = command.Bash();
@@ -107,12 +90,5 @@ namespace RaspiDualPhotoWebpage.Controllers
 			return savePath;
 		}
 
-	}
-
-	public class DisplayImage
-	{
-		public string Url => $"api/images/getfile?file={Uri.EscapeDataString(DirectoryName)}/{Uri.EscapeDataString(FileName)}";
-		public string DirectoryName { get; set; }
-		public string FileName { get; set; }
 	}
 }

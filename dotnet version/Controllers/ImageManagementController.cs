@@ -25,5 +25,13 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 			return Ok(displayImages);
 		}
+
+		public IActionResult ResizeImage([FromBody] DisplayImage displayImage)
+		{
+			displayImage.ResizedFilePath = Helpers.ScaleImage(_appSettings, displayImage.FilePath, 800);
+			displayImage.IsResized = true;
+
+			return Ok(displayImage);
+		}
 	}
 }

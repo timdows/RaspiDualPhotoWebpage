@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -73,6 +76,60 @@ namespace RaspiDualPhotoWebpage
 			Directory.CreateDirectory(saveDirectoryWithSubdir);
 
 			var savePath = Path.Combine(saveDirectoryWithSubdir, fileName);
+
+			return savePath;
+		}
+
+		public static string ScaleImage(AppSettings appSettings, string imagePath, int maxSize)
+		{
+			switch (appSettings.ImageScaler)
+			{
+				case 1:
+					return DoScaleImage(imagePath, appSettings.ResizedImagesPath, maxSize);
+				case 2:
+					return ResizeImage(imagePath, appSettings.ResizedImagesPath, maxSize);
+				default:
+					throw new Exception("Image scaler not found");
+			}
+		}
+
+		private static string DoScaleImage(string imagePath, string saveDirectory, int maxSize)
+		{
+			var fileName = Path.GetFileName(imagePath);
+			var imageDirectoryName = Path.GetFileName(Path.GetDirectoryName(imagePath));
+			var saveDirectoryWithSubdir = Path.Combine(saveDirectory, imageDirectoryName);
+			Directory.CreateDirectory(saveDirectoryWithSubdir);
+
+			var savePath = Path.Combine(saveDirectoryWithSubdir, fileName);
+
+			using (Image<Rgba32> image = Image.Load(imagePath))
+			{
+				var ratioX = (double)maxSize / image.Width;
+				var ratioY = (double)maxSize / image.Height;
+				var ratio = Math.Min(ratioX, ratioY);
+
+				var newWidth = (int)(image.Width * ratio);
+				var newHeight = (int)(image.Height * ratio);
+
+				image.Mutate(x => x
+					.Resize(newWidth, newHeight)
+					.AutoOrient());
+
+				using (var outputStream = new FileStream(savePath, FileMode.CreateNew))
+				{
+					image.SaveAsJpeg(outputStream);
+				}
+			}
+
+			return savePath;
+		}
+
+		private static string ResizeImage(string imagePath, string saveDirectory, int maxSize)
+		{
+			var savePath = GetSaveResizePath(imagePath, saveDirectory);
+
+			var command = $"convert '{imagePath}' -resize {maxSize} '{savePath}'";
+			var output = command.Bash();
 
 			return savePath;
 		}

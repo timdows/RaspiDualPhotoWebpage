@@ -7,5 +7,7 @@
 		public int MaxImageSize { get; set; }
 
 		public int DisplayOnTimer { get; set; }
+
+		public int ImageScaler { get; set; }
 	}
 }

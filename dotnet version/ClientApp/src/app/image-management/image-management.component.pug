@@ -7,5 +7,7 @@ table
         th Is resized
     tr(*ngFor="let displayImage of displayImages")
         td {{displayImage.directoryName}}
-        td {{displayImage.fileName}}
+        td
+            a(*ngIf="displayImage.isResized", [href]="displayImage.url", target="_blank") {{displayImage.fileName}}
+            span(*ngIf="!displayImage.isResized") {{displayImage.fileName}}
         td {{displayImage.isResized}}

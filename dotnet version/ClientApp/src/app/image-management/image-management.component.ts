@@ -21,6 +21,23 @@ export class ImageManagementComponent implements OnInit {
 		this.http.get("api/imagemanagement/getdisplayimagedetails")
 			.subscribe((data) => {
 				this.displayImages = data as Array<DisplayImage>;
+
+				this.startResizeProcess();
 			});
+	}
+
+	async startResizeProcess() {
+		for (let i = 0; i < this.displayImages.length; i++) {
+			if (this.displayImages[i].isResized) {
+				continue;
+			}
+
+			this.displayImages[i] = await this.doResizeImage(this.displayImages[i]);
+		}
+	}
+
+	async doResizeImage(displayImage: DisplayImage) {
+		const response = await this.http.post("api/ImageManagement/ResizeImage", displayImage).toPromise();
+		return response;
 	}
 }

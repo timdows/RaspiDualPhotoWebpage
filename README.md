@@ -15,6 +15,7 @@ npm install node-dir --save
 ## Display
 sudo chmod u+s /bin/chvt
 sudo vcgencmd display_power 1
+chromium-browser --kiosk --incognito --noerrdialogs --app="https://address.com"
 
 ## Publish
 https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md

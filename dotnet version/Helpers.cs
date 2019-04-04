@@ -61,6 +61,7 @@ namespace RaspiDualPhotoWebpage
 					FilePath = filePath,
 					DirectoryName = Path.GetFileName(Path.GetDirectoryName(filePath)),
 					FileName = Path.GetFileName(filePath),
+					IsResized = File.Exists(GetSaveResizePath(filePath, appSettings.ResizedImagesPath)),
 					ResizedFilePath = GetSaveResizePath(filePath, appSettings.ResizedImagesPath)
 				});
 			}

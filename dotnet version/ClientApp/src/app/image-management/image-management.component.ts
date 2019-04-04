@@ -9,7 +9,7 @@ import { DisplayImage } from '../DisplayImage';
 })
 export class ImageManagementComponent implements OnInit {
 
-	private displayImages = Array<DisplayImage>();
+	displayImages = Array<DisplayImage>();
 
 	constructor(private http: HttpClient) { }
 

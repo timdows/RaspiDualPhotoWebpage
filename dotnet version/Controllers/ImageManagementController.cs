@@ -17,12 +17,6 @@ namespace RaspiDualPhotoWebpage.Controllers
 		public IActionResult GetDisplayImageDetails()
 		{
 			var displayImages = Helpers.GetDisplayImages(_appSettings);
-
-			foreach (var displayImage in displayImages)
-			{
-				displayImage.IsResized = System.IO.File.Exists(displayImage.ResizedFilePath);
-			}
-
 			return Ok(displayImages);
 		}
 

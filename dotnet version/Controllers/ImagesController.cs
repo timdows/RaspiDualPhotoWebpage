@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
-using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace RaspiDualPhotoWebpage.Controllers
 {
@@ -23,6 +19,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 		public IActionResult GetImages()
 		{
 			var displayImages = Helpers.GetDisplayImages(_appSettings);
+			displayImages = displayImages.Where(item => item.IsResized).ToList();
 			displayImages.Shuffle();
 
 			return Ok(displayImages);
@@ -38,17 +35,6 @@ namespace RaspiDualPhotoWebpage.Controllers
 			}
 
 			return BadRequest("Resized image does not exist");
-
-			//var originalPath = Path.Combine(_appSettings.ImageLocationPath, file);
-			//if (!System.IO.File.Exists(originalPath))
-			//{
-				
-			//}
-
-			////var path = ScaleImage(originalPath, _appSettings.ResizedImagesPath, _appSettings.MaxImageSize);
-			//var path = ResizeImage(originalPath, _appSettings.ResizedImagesPath, _appSettings.MaxImageSize);
-
-			//return PhysicalFile(path, "image/jpeg");
 		}
 	}
 }

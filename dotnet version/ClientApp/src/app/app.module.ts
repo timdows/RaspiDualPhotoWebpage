@@ -27,6 +27,7 @@ import { ScreenManagementComponent } from './screen-management/screen-management
       { path: 'dual', component: DualPictureComponent },
       { path: 'quatro', component: QuatroPictureComponent },
       { path: 'imagemanagement', component: ImageManagementComponent },
+      { path: 'screenmanagement', component: ScreenManagementComponent }
     ])
   ],
   providers: [],

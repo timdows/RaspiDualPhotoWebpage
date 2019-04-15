@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { DualPictureComponent } from './dual-picture/dual-picture.component';
 import { QuatroPictureComponent } from './quatro-picture/quatro-picture.component';
 import { ImageManagementComponent } from './image-management/image-management.component';
+import { ScreenManagementComponent } from './screen-management/screen-management.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DualPictureComponent,
     QuatroPictureComponent,
-    ImageManagementComponent
+    ImageManagementComponent,
+    ScreenManagementComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

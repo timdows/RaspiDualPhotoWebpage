@@ -9,5 +9,7 @@
 		public int DisplayOnTimer { get; set; }
 
 		public int ImageScaler { get; set; }
+
+		public string MagicMirrorUrl { get; set; }
 	}
 }

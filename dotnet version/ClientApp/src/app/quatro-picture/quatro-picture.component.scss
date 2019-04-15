@@ -19,6 +19,12 @@
     background-size: contain;
   }
 
+  > iframe{
+    position: absolute;
+    height: 95%;
+    width: 100%;
+  }
+
   .imageText {
     position: absolute;
     height: 5%;

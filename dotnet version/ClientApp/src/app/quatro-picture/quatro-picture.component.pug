@@ -11,8 +11,12 @@
 	.imageText 
 		h3 {{bottomLeftImage.directoryName}}
 .bottom-right(*ngIf="bottomRightImage")
-	.image([style.background-image]="'url(' + bottomRightImage.url + ')'")
+	iframe(src="http://192.168.1.23:8080/")
 	.imageText 
-		h3 {{bottomRightImage.directoryName}}
+		h3 Anne is cool
+//- .bottom-right(*ngIf="bottomRightImage")
+//- 	.image([style.background-image]="'url(' + bottomRightImage.url + ')'")
+//- 	.imageText 
+//- 		h3 {{bottomRightImage.directoryName}}
 .countdown
 	| ({{countdownMinutes}}:{{countdownSeconds}})

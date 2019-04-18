@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RaspiDualPhotoWebpage
 {
@@ -16,19 +17,24 @@ namespace RaspiDualPhotoWebpage
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+			// In production, the Angular files will be served from this directory
+			services.AddSpaStaticFiles(configuration =>
+			{
+				configuration.RootPath = "ClientApp/dist";
+			});
 
 			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 			services.AddSingleton(new CountdownTimer());
+
+			services.AddSwaggerGen(options =>
+			{
+				options.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
+			});
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +54,13 @@ namespace RaspiDualPhotoWebpage
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
+			});
+
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",

@@ -21,6 +21,6 @@ chromium-browser --kiosk --incognito --noerrdialogs --app="https://address.com"
 https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md
 dotnet publish -r linux-arm --self-contained -c Release
 
-## Resize
+## Resize (convert command)
 sudo apt-get update
 sudo apt-get install imagemagick

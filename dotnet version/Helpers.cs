@@ -56,14 +56,24 @@ namespace RaspiDualPhotoWebpage
 			foreach (var filePath in filePaths)
 			{
 				filePath.Replace(appSettings.ImageLocationPath, string.Empty);
-				displayImages.Add(new DisplayImage
+				var displayImage = new DisplayImage
 				{
 					FilePath = filePath,
 					DirectoryName = Path.GetFileName(Path.GetDirectoryName(filePath)),
 					FileName = Path.GetFileName(filePath),
 					IsResized = File.Exists(GetSaveResizePath(filePath, appSettings.ResizedImagesPath)),
 					ResizedFilePath = GetSaveResizePath(filePath, appSettings.ResizedImagesPath)
-				});
+				};
+
+				if (displayImage.IsResized)
+				{
+					using (Image<Rgba32> image = Image.Load(displayImage.ResizedFilePath))
+					{
+						displayImage.BackgroundCover = image.Width > image.Height;
+					}
+				}
+
+				displayImages.Add(displayImage);
 			}
 
 			return displayImages;

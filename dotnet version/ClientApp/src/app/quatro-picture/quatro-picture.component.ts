@@ -17,7 +17,7 @@ export class QuatroPictureComponent implements OnInit {
 	bottomLeftImage: DisplayImage;
 	bottomRightImage: DisplayImage;
 
-	showCountdown: boolean;
+	showCountdown: boolean = false;
 	countdownMinutes: number;
 	countdownSeconds: string;
 
@@ -99,12 +99,13 @@ export class QuatroPictureComponent implements OnInit {
 
 	// Gets the countdown value from nodejs (server.js) with the seconds the screen will be on
 	private getCountdown(): void {
-		//this.http.get("countdown.json")
-		//  .subscribe((data) => {
-		//    let countdown = data.json().countdown;
-		//    this.countdownMinutes = Math.floor(countdown / 60);
-		//    this.countdownSeconds = ('0000' + countdown % 60).slice(-2);
-		//  });
+		
+		// this.http.get("countdown.json")
+		// 	.subscribe((data) => {
+		// 		let countdown = data.json().countdown;
+		// 		this.countdownMinutes = Math.floor(countdown / 60);
+		// 		this.countdownSeconds = ('0000' + countdown % 60).slice(-2);
+		// 	});
 	}
 
 }

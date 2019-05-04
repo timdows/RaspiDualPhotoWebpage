@@ -1,80 +1,84 @@
 :host {
 }
 
-.top-left,
-.top-right,
-.bottom-left,
-.bottom-right {
-  position: fixed;
-  width: 50%;
-  height: 50%;
+// .quatro-row {
+//   display: flex;
+//   // height: 49vh;
+
+//   > .image-container {
+//     flex: 50%;
+//   }
+// }
+
+.quatro-row {
   background-color: black;
+  
+  height: calc(50vh - 5px);
+  // max-height: 100vh;
+  //padding-bottom: 10px;
+  display: flex;
+  // flex: 0 0;
+  // flex-wrap: wrap;
+  // flex-direction: column;
 
-  > .image {
-    position: absolute;
-    height: 95%;
-    width: 100%;
-    // background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  > .imageBackgroundCover {
-    background-size: cover;
-  }
-
-  > iframe{
-    position: absolute;
-    height: 95%;
-    width: 100%;
-  }
-
-  .imageText {
-    position: absolute;
-    height: 5%;
-    width: 100%;
-    top: 95%;
-    display: flex;
+  > .image-container {
+    flex: 50%;
+    display: flex; 
+    flex-basis: calc(50%);  
     justify-content: center;
-    align-content: center;
     flex-direction: column;
 
-    > h3 {
-      margin: 0;
-      color: white;
-      text-align: center;
+    > .image {
+      height:95%;
+      max-width:100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    > .imageBackgroundCover {
+      background-size: cover;
+    }
+
+    .imageText {
+      height: 5%;
+      width: 100%;
+      top: 95%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+
+      > h3 {
+        margin: 0;
+        color: white;
+        text-align: center;
+      }
     }
   }
-}
 
-.top-left { 
-	top:0;
-	left:0;
-}
-.top-right {
-	top:0;
-	left:50%;
-}
-.bottom-left { 
-	top:50%; 
-	left:0;
-}
-.bottom-right { 
-	top:50%; 
-  left:50%;
-  
-  > iframe {
-    border: 0;
+  > .iframe-container{
+    flex: 0 0 50%;
+    display: flex; 
+    flex-basis: calc(50%);  
+    justify-content: center;
+    flex-direction: column;
+
+    > iframe {
+      border: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .countdown {
+    position: fixed;
+    bottom: 0%;
+    left: 0%;
+    color: white;
+    font-size: x-small;
+    padding-right: .5rem;
+    padding-bottom: .5rem;
   }
 }
 
-.countdown {
-	position: fixed;
-	top: 0%;
-	left: 0%;
-	color: white;
-	font-size: x-small;
-	padding-right: .5rem;
-	padding-bottom: .5rem;
-}

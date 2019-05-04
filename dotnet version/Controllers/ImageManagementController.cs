@@ -16,7 +16,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 		public IActionResult GetDisplayImageDetails()
 		{
-			var displayImages = Helpers.GetDisplayImages(_appSettings);
+			var displayImages = Helpers.GetDisplayImages(_appSettings, false);
 			return Ok(displayImages);
 		}
 

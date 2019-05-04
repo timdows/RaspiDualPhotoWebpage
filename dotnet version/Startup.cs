@@ -30,6 +30,7 @@ namespace RaspiDualPhotoWebpage
 
 			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 			services.AddSingleton(new CountdownTimer());
+			services.AddSingleton(new DisplayImagesService());
 
 			services.AddSwaggerGen(options =>
 			{
@@ -51,8 +52,22 @@ namespace RaspiDualPhotoWebpage
             }
 
             //app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+			{
+				OnPrepareResponse = context =>
+				{
+					context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
+					context.Context.Response.Headers.Add("Expires", "-1");
+				}
+			});
+			app.UseSpaStaticFiles(new StaticFileOptions()
+			{
+				OnPrepareResponse = context =>
+				{
+					context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
+					context.Context.Response.Headers.Add("Expires", "-1");
+				}
+			});
 
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>

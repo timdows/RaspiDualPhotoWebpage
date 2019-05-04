@@ -48,7 +48,7 @@ namespace RaspiDualPhotoWebpage
 			}
 		}
 
-		public static List<DisplayImage> GetDisplayImages(AppSettings appSettings)
+		public static List<DisplayImage> GetDisplayImages(AppSettings appSettings, bool checkBackgroundCover)
 		{
 			var displayImages = new List<DisplayImage>();
 
@@ -65,11 +65,33 @@ namespace RaspiDualPhotoWebpage
 					ResizedFilePath = GetSaveResizePath(filePath, appSettings.ResizedImagesPath)
 				};
 
-				if (displayImage.IsResized)
+				if (displayImage.IsResized && checkBackgroundCover)
 				{
-					using (Image<Rgba32> image = Image.Load(displayImage.ResizedFilePath))
+					// Linux
+					if (appSettings.ImageScaler == 2)
 					{
-						displayImage.BackgroundCover = image.Width > image.Height;
+						try
+						{
+							var command = $"identify -format '%w:%h' '{displayImage.ResizedFilePath}'";
+							var output = command.Bash();
+							Console.WriteLine($"{command} {output}");
+							var splittedOutput = output.Split(":");
+							var width = int.Parse(splittedOutput[0]);
+							var height = int.Parse(splittedOutput[1]);
+
+							displayImage.BackgroundCover = width > height;
+						}
+						catch (Exception excep)
+						{
+							Console.Error.WriteLine(excep.Message);
+						}
+					}
+					else
+					{
+						using (Image<Rgba32> image = Image.Load(displayImage.ResizedFilePath))
+						{
+							displayImage.BackgroundCover = image.Width > image.Height;
+						}
 					}
 				}
 

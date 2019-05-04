@@ -18,3 +18,5 @@
 //- 		h3 {{bottomRightImage.directoryName}}
 .countdown(*ngIf="showCountdown")
 	| {{countdownMinutes}}:{{countdownSeconds}}
+.loading(*ngIf="displayImages.length == 0")
+	span Bezig met laden van fotos

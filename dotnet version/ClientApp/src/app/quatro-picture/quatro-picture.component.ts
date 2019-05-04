@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuatroPictureComponent implements OnInit {
 
-	private displayImages = Array<DisplayImage>();
+	displayImages = Array<DisplayImage>();
 	private imageNumber = -1;
 
 	topLeftImage: DisplayImage;
@@ -21,11 +21,10 @@ export class QuatroPictureComponent implements OnInit {
 	countdownMinutes: number;
 	countdownSeconds: string;
 
-
+	isInitialized = false;
 
 	private switch = true;
 	private imageSwitchNumber = 0;
-	private firstRunCompleted = false;
 
 	constructor(private http: HttpClient) { }
 
@@ -47,13 +46,22 @@ export class QuatroPictureComponent implements OnInit {
 			.subscribe((data) => {
 				this.displayImages = data as Array<DisplayImage>;
 
-				if (!this.firstRunCompleted) {
-					this.firstRunCompleted = true;
-					this.changeImages();
-					this.changeImages();
-					this.changeImages();
-					this.changeImages();
-				}
+				this.isInitialized = true;
+
+				this.changeImages();
+				this.changeImages();
+				this.changeImages();
+			});
+	}
+
+	private refreshAvailableImages(): void {
+		if (!this.isInitialized) {
+			return;
+		}
+
+		this.http.get("api/images/getimages")
+			.subscribe((data) => {
+				this.displayImages = data as Array<DisplayImage>;
 			});
 	}
 
@@ -69,12 +77,12 @@ export class QuatroPictureComponent implements OnInit {
 		else if (this.imageSwitchNumber == 2) {
 			this.bottomLeftImage = this.displayImages[imageNumber];
 		}
-		else if (this.imageSwitchNumber == 3) {
-			this.bottomRightImage = this.displayImages[imageNumber];
-		}
+		// else if (this.imageSwitchNumber == 3) {
+		// 	this.bottomRightImage = this.displayImages[imageNumber];
+		// }
 
 		this.imageSwitchNumber++;
-		if (this.imageSwitchNumber == 4) {
+		if (this.imageSwitchNumber == 3) {
 			this.imageSwitchNumber = 0;
 		}
 	}
@@ -82,7 +90,7 @@ export class QuatroPictureComponent implements OnInit {
 	private getImageNumber(): number {
 		this.imageNumber++;
 		if (this.imageNumber >= this.displayImages.length) {
-			this.getAvailableImages();
+			this.refreshAvailableImages();
 			this.imageNumber = 0;
 		}
 

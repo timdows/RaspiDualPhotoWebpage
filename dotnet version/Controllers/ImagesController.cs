@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -10,15 +11,27 @@ namespace RaspiDualPhotoWebpage.Controllers
 	public class ImagesController : ControllerBase
 	{
 		private readonly AppSettings _appSettings;
+		private readonly DisplayImagesService _displayImagesService;
 
-		public ImagesController(IOptions<AppSettings> appSettings)
+		public ImagesController(IOptions<AppSettings> appSettings, DisplayImagesService displayImagesService)
 		{
 			_appSettings = appSettings.Value;
+			_displayImagesService = displayImagesService;
 		}
 
 		public IActionResult GetImages()
 		{
-			var displayImages = Helpers.GetDisplayImages(_appSettings);
+			List<DisplayImage> displayImages = null;
+			if (_displayImagesService.DisplayImages != null)
+			{
+				displayImages = _displayImagesService.DisplayImages;
+			}
+			else
+			{
+				displayImages = Helpers.GetDisplayImages(_appSettings, true);
+				_displayImagesService.DisplayImages = displayImages;
+			}
+
 			displayImages = displayImages.Where(item => item.IsResized).ToList();
 			displayImages.Shuffle();
 

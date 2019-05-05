@@ -1,4 +1,4 @@
-.quatro-row
+.quatro-row(*ngIf="isInitialized")
 	.image-container(*ngIf="topLeftImage")
 		.image([style.background-image]="'url(' + topLeftImage.url + ')'", [ngClass]="{imageBackgroundCover: topLeftImage.backgroundCover}")
 		.imageText 
@@ -7,7 +7,7 @@
 		.image([style.background-image]="'url(' + topRightImage.url + ')'", [ngClass]="{imageBackgroundCover: topRightImage.backgroundCover}")
 		.imageText 
 			h3 {{topRightImage.directoryName}}
-.quatro-row
+.quatro-row(*ngIf="isInitialized")
 	.image-container(*ngIf="bottomLeftImage")
 		.image([style.background-image]="'url(' + bottomLeftImage.url + ')'", [ngClass]="{imageBackgroundCover: bottomLeftImage.backgroundCover}")
 		.imageText 

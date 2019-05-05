@@ -15,7 +15,6 @@ export class QuatroPictureComponent implements OnInit {
 	topLeftImage: DisplayImage;
 	topRightImage: DisplayImage;
 	bottomLeftImage: DisplayImage;
-	bottomRightImage: DisplayImage;
 
 	showCountdown: boolean = false;
 	countdownMinutes: number;
@@ -32,9 +31,9 @@ export class QuatroPictureComponent implements OnInit {
 		this.getAvailableImages();
 
 		// Get the countdown every second
-		setInterval(() => {
-			this.getCountdown();
-		}, 1000);
+		// setInterval(() => {
+		// 	this.getCountdown();
+		// }, 1000);
 		// Change image every 7 seconds
 		setInterval(() => {
 			this.changeImages();
@@ -77,9 +76,6 @@ export class QuatroPictureComponent implements OnInit {
 		else if (this.imageSwitchNumber == 2) {
 			this.bottomLeftImage = this.displayImages[imageNumber];
 		}
-		// else if (this.imageSwitchNumber == 3) {
-		// 	this.bottomRightImage = this.displayImages[imageNumber];
-		// }
 
 		this.imageSwitchNumber++;
 		if (this.imageSwitchNumber == 3) {

@@ -12,6 +12,7 @@ import { ApiModule, Configuration, ConfigurationParameters } from 'api';
 import { environment } from 'environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { ResizePhotosComponent } from './resize-photos/resize-photos.component';
 
 export function apiConfigFactory(): Configuration {
     const params: ConfigurationParameters = {
@@ -26,7 +27,8 @@ export function apiConfigFactory(): Configuration {
         AppComponent,
         NavbarComponent,
         HomeComponent,
-        FooterComponent
+        FooterComponent,
+        ResizePhotosComponent
     ],
     imports: [
         ApiModule.forRoot(apiConfigFactory),

@@ -62,15 +62,18 @@ export class ImageManagementService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getDisplayImageDetails(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getDisplayImageDetails(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getDisplayImageDetails(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public getDisplayImageDetails(observe?: 'body', reportProgress?: boolean): Observable<Array<DisplayImage>>;
+    public getDisplayImageDetails(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DisplayImage>>>;
+    public getDisplayImageDetails(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DisplayImage>>>;
     public getDisplayImageDetails(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -81,7 +84,7 @@ export class ImageManagementService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/api/ImageManagement/GetDisplayImageDetails`,
+        return this.httpClient.get<Array<DisplayImage>>(`${this.basePath}/api/ImageManagement/GetDisplayImageDetails`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -98,9 +101,9 @@ export class ImageManagementService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public resizeImage(displayImage?: DisplayImage, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public resizeImage(displayImage?: DisplayImage, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public resizeImage(displayImage?: DisplayImage, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public resizeImage(displayImage?: DisplayImage, observe?: 'body', reportProgress?: boolean): Observable<DisplayImage>;
+    public resizeImage(displayImage?: DisplayImage, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DisplayImage>>;
+    public resizeImage(displayImage?: DisplayImage, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DisplayImage>>;
     public resizeImage(displayImage?: DisplayImage, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -108,6 +111,9 @@ export class ImageManagementService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -126,7 +132,7 @@ export class ImageManagementService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/api/ImageManagement/ResizeImage`,
+        return this.httpClient.post<DisplayImage>(`${this.basePath}/api/ImageManagement/ResizeImage`,
             displayImage,
             {
                 withCredentials: this.configuration.withCredentials,

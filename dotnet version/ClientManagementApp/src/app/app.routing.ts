@@ -2,15 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
-import { LandingComponent } from './examples/landing/landing.component';
-import { DailyPictureComponent } from './daily-picture/daily-picture.component';
-import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-    { path: '', component: LandingComponent },
-    { path: 'dailypictures', component: DailyPictureComponent },
-    { path: 'abouttim', component: ProfileComponent },
+    { path: '', component: HomeComponent },
+    // { path: 'dailypictures', component: DailyPictureComponent },
+    // { path: 'abouttim', component: ProfileComponent },
     { path: '**', redirectTo: '/' }
 ];
 

@@ -17,6 +17,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 			_countdownTimer = countdownTimer;
 		}
 
+		[HttpGet]
 		public IActionResult GetCountdown()
 		{
 			var displayOnTimer = _appSettings.DisplayOnTimer;
@@ -31,7 +32,8 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 			return Ok(secondsLeft);
 		}
-		
+
+		[HttpGet]
 		public IActionResult DisplayOnTimer()
 		{
 			var output = "vcgencmd display_power 1".Bash();

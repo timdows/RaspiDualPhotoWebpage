@@ -14,12 +14,14 @@ namespace RaspiDualPhotoWebpage.Controllers
 			_appSettings = appSettings.Value;
 		}
 
+		[HttpGet]
 		public IActionResult GetDisplayImageDetails()
 		{
 			var displayImages = Helpers.GetDisplayImages(_appSettings, false);
 			return Ok(displayImages);
 		}
 
+		[HttpPost]
 		public IActionResult ResizeImage([FromBody] DisplayImage displayImage)
 		{
 			displayImage.ResizedFilePath = Helpers.ScaleImage(_appSettings, displayImage.FilePath, 800);

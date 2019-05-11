@@ -19,6 +19,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 			_displayImagesService = displayImagesService;
 		}
 
+		[HttpGet]
 		public IActionResult GetImages()
 		{
 			List<DisplayImage> displayImages = null;
@@ -38,6 +39,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 			return Ok(displayImages);
 		}
 
+		[HttpGet]
 		[ResponseCache(NoStore = true, Duration = 0)]
 		public IActionResult GetFile([FromQuery]string file)
 		{

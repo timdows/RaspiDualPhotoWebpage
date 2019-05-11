@@ -1,3 +1,7 @@
-export * from './hour1400.service';
-import { Hour1400Service } from './hour1400.service';
-export const APIS = [Hour1400Service];
+export * from './control.service';
+import { ControlService } from './control.service';
+export * from './imageManagement.service';
+import { ImageManagementService } from './imageManagement.service';
+export * from './images.service';
+import { ImagesService } from './images.service';
+export const APIS = [ControlService, ImageManagementService, ImagesService];

@@ -3,14 +3,18 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
-import { Hour1400Service } from './api/hour1400.service';
+import { ControlService } from './api/control.service';
+import { ImageManagementService } from './api/imageManagement.service';
+import { ImagesService } from './api/images.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
-    Hour1400Service ]
+    ControlService,
+    ImageManagementService,
+    ImagesService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {

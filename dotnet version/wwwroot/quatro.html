@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Quatro pictures</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+
+        .loader {
+            left: 50%;
+            top: 45%;
+            position: absolute;
+        }
+
+        .lds-heart {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+            transform: rotate(45deg);
+            transform-origin: 32px 32px;
+        }
+
+        .lds-heart div {
+            top: 23px;
+            left: 19px;
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: #fff;
+            animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .lds-heart div:after,
+        .lds-heart div:before {
+            content: " ";
+            position: absolute;
+            display: block;
+            width: 26px;
+            height: 26px;
+            background: #fff;
+        }
+
+        .lds-heart div:before {
+            left: -17px;
+            border-radius: 50% 0 0 50%;
+        }
+
+        .lds-heart div:after {
+            top: -17px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        @keyframes lds-heart {
+            0% {
+                transform: scale(0.95);
+            }
+
+            5% {
+                transform: scale(1.1);
+            }
+
+            39% {
+                transform: scale(0.85);
+            }
+
+            45% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(0.9);
+            }
+        }
+
+        .quatro-row {
+            background-color: black;
+            height: calc(50vh - 5px);
+            /* display: flex; */
+            display: none;
+        }
+
+        .quatro-row>.image-container {
+            flex: 50%;
+            display: flex;
+            flex-basis: calc(50%);
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .quatro-row>.image-container>.image {
+            height: 95%;
+            max-width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .quatro-row>.image-container>.imageBackgroundCover {
+            background-size: cover;
+        }
+
+        .quatro-row>.image-container .imageText {
+            height: 5%;
+            width: 100%;
+            top: 95%;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-direction: column;
+        }
+
+        .quatro-row>.image-container .imageText>h3 {
+            margin: 0;
+            color: white;
+            text-align: center;
+        }
+
+        .quatro-row>.iframe-container {
+            flex: 0 0 50%;
+            display: flex;
+            flex-basis: calc(50%);
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .quatro-row>.iframe-container>iframe {
+            border: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .quatro-row .countdown {
+            position: fixed;
+            bottom: 0%;
+            left: 0%;
+            color: white;
+            font-size: x-small;
+            padding-right: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+    <script src="jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <div class="loader">
+        <div class="lds-heart">
+            <div></div>
+        </div>
+    </div>
+
+    <div class="quatro-row">
+        <div class="image-container" id="image1">
+            <div class="image"></div>
+            <div class="imageText">
+                <h3>Test</h3>
+            </div>
+        </div>
+        <div class="image-container" id="image2">
+            <div class="image"></div>
+            <div class="imageText">
+                <h3>Test</h3>
+            </div>
+        </div>
+    </div>
+    <div class="quatro-row">
+        <div class="image-container" id="image3">
+            <div class="image"></div>
+            <div class="imageText">
+                <h3>Test</h3>
+            </div>
+        </div>
+        <div class="iframe-container">
+            <iframe src="http://192.168.1.127:8080/"></iframe>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    let images = Array();
+    $.getJSON('api/images/getimages', function (data) {
+        //data is the JSON string
+        console.log(data);
+        images = data;
+        $(".loader").css("display", "none");
+        $(".quatro-row").css("display", "flex");
+
+        changeImage();
+        changeImage();
+        changeImage();
+
+        setInterval(() => {
+            changeImage();
+        }, 7500);
+    });
+
+    function getImages() {
+        $.getJSON('api/images/getimages', function (data) {
+            images = data;
+        });
+    }
+
+    let imageIndex = 0;
+    let containerIndex = 1;
+    function changeImage() {
+        let containerName = "image" + containerIndex.toString();
+        console.log("Changing " + containerName);
+        let image = $("#" + containerName + " > .image");
+        // image.html("<img src='" + images[imageIndex].url + "' />")
+        image.css("background-image", "url(" + images[imageIndex].url + ")")
+        console.log(image);
+        changeIndexes();
+    }
+
+    function changeIndexes() {
+        imageIndex++;
+        if (imageIndex > images.length) {
+            getImages();
+            imageIndex = 0;
+        }
+        containerIndex++;
+        if (containerIndex > 3) {
+            containerIndex = 1;
+        }
+    }
+</script>
+
+</html>

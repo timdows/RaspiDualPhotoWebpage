@@ -1,0 +1,14 @@
+.wrapper
+  .page-header.page-header-small
+    .page-header-image.rellax-header(data-rellax-speed='-8', style="background-image: url('assets/img/oud.jpg');")
+    .container
+      .content-center
+        h1.title Elke dag om 14:00 een foto 
+  .section.section-about-us
+    .container  
+      .row
+        .col-md-11
+          .thumbnails
+            .thumbnail-item(*ngFor="let hour1400File of hour1400Files")
+              img.img-raised([src]="getImagePath(hour1400File)")
+              .text {{hour1400File.dateTaken | date:'d MMM y'}}

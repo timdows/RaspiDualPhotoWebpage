@@ -1,0 +1,39 @@
+nav.navbar.navbar-expand-lg.bg-primary.fixed-top.navbar-transparent(color-on-scroll='500')
+  .container
+    .navbar-translate
+      a.navbar-brand([routerLink]="['/']", placement='bottom')
+        | Upliving.nl
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarToggler', aria-controls='navbarTogglerDemo02', aria-expanded='false', aria-label='Toggle navigation', (click)='sidebarToggle()')
+        span.navbar-toggler-bar.bar1
+        span.navbar-toggler-bar.bar2
+        span.navbar-toggler-bar.bar3
+    .collapse.navbar-collapse(data-nav-image='assets/img/blurred-image-1.jpg', data-color='orange')
+      ul.navbar-nav.ml-auto
+        li.nav-item
+          a.nav-link([routerLink]="['/abouttim']")
+            i.fa.fa-id-badge.fa-2x
+            p &nbsp;Over Tim
+        li.nav-item
+          a.nav-link([routerLink]="['/dailypictures']")
+            i.fa.fa-camera-retro.fa-2x
+            p &nbsp;Dagelijkse foto
+        //- li.nav-item
+        //-   a.nav-link(href='https://creativetimofficial.github.io/now-ui-kit-angular/documentation/tutorial', target='_blank')
+        //-     i.now-ui-icons.files_paper
+        //-     p Documentation
+        //- li.nav-item
+        //-   a.nav-link.btn.btn-neutral(href='https://www.creative-tim.com/product/now-ui-kit-pro-angular', target='_blank')
+        //-     i.now-ui-icons.arrows-1_share-66
+        //-     p Upgrade to PRO
+        //- li.nav-item
+        //-   a.nav-link(rel='tooltip', title='Follow us on Twitter', data-placement='bottom', href='https://twitter.com/CreativeTim', target='_blank')
+        //-     i.fab.fa-twitter
+        //-     p.d-lg-none.d-xl-none Twitter
+        //- li.nav-item
+        //-   a.nav-link(rel='tooltip', title='Like us on Facebook', data-placement='bottom', href='https://www.facebook.com/CreativeTim', target='_blank')
+        //-     i.fab.fa-facebook-square
+        //-     p.d-lg-none.d-xl-none Facebook
+        //- li.nav-item
+        //-   a.nav-link(rel='tooltip', title='Follow us on Instagram', data-placement='bottom', href='https://www.instagram.com/CreativeTimOfficial', target='_blank')
+        //-     i.fab.fa-instagram
+        //-     p.d-lg-none.d-xl-none Instagram

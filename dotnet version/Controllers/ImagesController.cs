@@ -28,7 +28,7 @@ namespace RaspiDualPhotoWebpage.Controllers
 			}
 			else
 			{
-				displayImages = Helpers.GetDisplayImages(_appSettings, true);
+				displayImages = Helpers.GetDisplayImages(_appSettings, false);
 				_displayImagesService.DisplayImages = displayImages;
 			}
 

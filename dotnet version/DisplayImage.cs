@@ -13,6 +13,6 @@ namespace RaspiDualPhotoWebpage
 		public string ResizedFilePath { get; set; }
 		//public string ThumbnailFilePath { get; set; }
 
-		public bool BackgroundCover { get; set; }
+		public bool? BackgroundCover { get; set; }
 	}
 }

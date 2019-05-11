@@ -4,8 +4,17 @@
 <head>
     <meta charset="utf-8" />
     <title>Quatro pictures</title>
+    
     <style>
+        @font-face {
+            font-family: "Roboto";
+            src: url("/fonts/Roboto-Light.ttf") format('truetype');
+            font-weight: 100;
+            font-style: normal;
+        }
+
         body {
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: black;
@@ -188,8 +197,6 @@
 <script type="text/javascript">
     let images = Array();
     $.getJSON('api/images/getimages', function (data) {
-        //data is the JSON string
-        console.log(data);
         images = data;
         $(".loader").css("display", "none");
         $(".quatro-row").css("display", "flex");
@@ -227,6 +234,9 @@
                 imageContainer.css("background-size", "contain");
             }
         });
+
+        let textContainer = $("#" + containerName + " > .imageText > h3");
+        textContainer.html(images[imageIndex].directoryName);
 
         changeIndexes();
     }

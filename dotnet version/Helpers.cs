@@ -67,38 +67,46 @@ namespace RaspiDualPhotoWebpage
 
 				if (displayImage.IsResized && checkBackgroundCover)
 				{
-					// Linux
-					if (appSettings.ImageScaler == 2)
-					{
-						try
-						{
-							var command = $"identify -format '%w:%h' '{displayImage.ResizedFilePath}'";
-							var output = command.Bash();
-							Console.WriteLine($"{command} {output}");
-							var splittedOutput = output.Split(":");
-							var width = int.Parse(splittedOutput[0]);
-							var height = int.Parse(splittedOutput[1]);
-
-							displayImage.BackgroundCover = width > height;
-						}
-						catch (Exception excep)
-						{
-							Console.Error.WriteLine(excep.Message);
-						}
-					}
-					else
-					{
-						using (Image<Rgba32> image = Image.Load(displayImage.ResizedFilePath))
-						{
-							displayImage.BackgroundCover = image.Width > image.Height;
-						}
-					}
+					displayImage.BackgroundCover = ShouldImageCoverBackground(appSettings, displayImage.ResizedFilePath);
 				}
 
 				displayImages.Add(displayImage);
 			}
 
 			return displayImages;
+		}
+
+		public static bool? ShouldImageCoverBackground(AppSettings appSettings, string filePath)
+		{
+
+			// Linux
+			if (appSettings.ImageScaler == 2)
+			{
+				try
+				{
+					var command = $"identify -format '%w:%h' '{filePath}'";
+					var output = command.Bash();
+					Console.WriteLine($"{command} {output}");
+					var splittedOutput = output.Split(":");
+					var width = int.Parse(splittedOutput[0]);
+					var height = int.Parse(splittedOutput[1]);
+
+					return width > height;
+				}
+				catch (Exception excep)
+				{
+					Console.Error.WriteLine(excep.Message);
+				}
+			}
+			else
+			{
+				using (Image<Rgba32> image = Image.Load(filePath))
+				{
+					return image.Width > image.Height;
+				}
+			}
+
+			return null;
 		}
 
 		public static string GetSaveResizePath(string imagePath, string saveDirectory)

@@ -213,11 +213,21 @@
     let containerIndex = 1;
     function changeImage() {
         let containerName = "image" + containerIndex.toString();
-        console.log("Changing " + containerName);
-        let image = $("#" + containerName + " > .image");
-        // image.html("<img src='" + images[imageIndex].url + "' />")
-        image.css("background-image", "url(" + images[imageIndex].url + ")")
-        console.log(image);
+        let imageContainer = $("#" + containerName + " > .image");
+
+        var image = new Image();
+        image.src = images[imageIndex].url;
+        imageContainer.css("background-image", "url(" + images[imageIndex].url + ")");
+
+        $(image).one('load', function () {
+            if (image.width > image.height) {
+                imageContainer.css("background-size", "cover");
+            }
+            else {
+                imageContainer.css("background-size", "contain");
+            }
+        });
+
         changeIndexes();
     }
 

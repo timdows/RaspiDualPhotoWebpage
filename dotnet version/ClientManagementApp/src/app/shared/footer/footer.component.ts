@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.pug',
-  styleUrls: ['./footer.component.scss']
+	selector: 'app-footer',
+	templateUrl: './footer.component.pug',
+	styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  data : Date = new Date();
-  constructor() { }
+	data: Date = new Date();
+	constructor() { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
 }

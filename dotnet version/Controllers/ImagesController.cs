@@ -51,5 +51,18 @@ namespace RaspiDualPhotoWebpage.Controllers
 
 			return BadRequest("Resized image does not exist");
 		}
+
+		[HttpGet]
+		[ResponseCache(NoStore = true, Duration = 0)]
+		public IActionResult GetThumbnail([FromQuery]string file)
+		{
+			var resizedPath = Path.Combine(_appSettings.ThumbnailImagesPath, file);
+			if (System.IO.File.Exists(resizedPath))
+			{
+				return PhysicalFile(resizedPath, "image/jpeg");
+			}
+
+			return BadRequest("Resized image does not exist");
+		}
 	}
 }

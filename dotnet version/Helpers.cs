@@ -121,14 +121,14 @@ namespace RaspiDualPhotoWebpage
 			return savePath;
 		}
 
-		public static string ScaleImage(AppSettings appSettings, string imagePath, int maxSize)
+		public static string ScaleImage(int imageScaler, string saveDirectory, string imagePath, int maxSize)
 		{
-			switch (appSettings.ImageScaler)
+			switch (imageScaler)
 			{
 				case 1:
-					return DoScaleImage(imagePath, appSettings.ResizedImagesPath, maxSize);
+					return DoScaleImage(imagePath, saveDirectory, maxSize);
 				case 2:
-					return ResizeImage(imagePath, appSettings.ResizedImagesPath, maxSize);
+					return ResizeImage(imagePath, saveDirectory, maxSize);
 				default:
 					throw new Exception("Image scaler not found");
 			}

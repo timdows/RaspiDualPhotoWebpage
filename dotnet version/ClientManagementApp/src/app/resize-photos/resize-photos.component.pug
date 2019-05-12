@@ -1,4 +1,35 @@
 .wrapper
   .main
-    .section.section-nude
-      h1 hoi
+    .section
+      .container
+        h3.title Resize foto's
+        .row(*ngIf="!displayImages")
+          .col-md-12
+            div Bezig met laden van foto's &nbsp;
+              i.fa.fa-cog.fa-spin
+        .row(*ngIf="displayImages")
+          .col-md-6
+            span(*ngIf="isResizing") Bezig met {{currentResizeIndex}} van {{displayImages.length}}
+          .col-md-6
+            .form-group.text-center
+              label Toon thumbnails &nbsp;
+              bSwitch(name="showThumbs", [switch-on-color]="'primary'", [switch-off-color]="'primary'", [switch-off-text]="'&#x2715;'", [switch-on-text]="'&#x2714;'", [(ngModel)]="showThumbs")
+          .col-md-12
+            table.table-bordered.table-striped
+              tr
+                th Directory name
+                th File name
+                th Is resized
+                th(*ngIf="showThumbs") Thumbnail
+              tr(*ngFor="let displayImage of displayImages")
+                td {{displayImage.directoryName}}
+                td {{displayImage.fileName}}
+                td 
+                  ng-container(*ngIf="!displayImage.isResizing")
+                    div(*ngIf="displayImage.isResized") Ja
+                    div(*ngIf="!displayImage.isResized") Nope
+                  ng-container(*ngIf="displayImage.isResizing")
+                    i.fa.fa-cog.fa-spin
+                td 
+                  ng-container(*ngIf="showThumbs")
+                    img(*ngIf="displayImage.isResized", [src]="displayImage.thumbnailUrl")

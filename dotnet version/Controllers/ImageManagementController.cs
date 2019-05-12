@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.IO;
 
 namespace RaspiDualPhotoWebpage.Controllers
 {
@@ -29,7 +30,8 @@ namespace RaspiDualPhotoWebpage.Controllers
 		[ProducesResponseType(500)]
 		public IActionResult ResizeImage([FromBody] DisplayImage displayImage)
 		{
-			displayImage.ResizedFilePath = Helpers.ScaleImage(_appSettings, displayImage.FilePath, 800);
+			displayImage.ResizedFilePath = Helpers.ScaleImage(_appSettings.ImageScaler, _appSettings.ResizedImagesPath, displayImage.FilePath, 800);
+			displayImage.ThumbnailImagePath = Helpers.ScaleImage(_appSettings.ImageScaler, _appSettings.ThumbnailImagesPath, displayImage.ResizedFilePath, 150);
 			displayImage.IsResized = true;
 
 			return Ok(displayImage);

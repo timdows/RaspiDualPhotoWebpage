@@ -14,9 +14,12 @@
 export interface DisplayImage { 
     filePath?: string;
     readonly url?: string;
+    readonly thumbnailUrl?: string;
     directoryName?: string;
     fileName?: string;
     isResized?: boolean;
     resizedFilePath?: string;
+    thumbnailImagePath?: string;
     backgroundCover?: boolean;
+    isResizing?: boolean;
 }

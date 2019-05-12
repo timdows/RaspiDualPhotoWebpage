@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
 import { ResizePhotosComponent } from './resize-photos/resize-photos.component';
 import { ScreenManagementComponent } from './screen-management/screen-management.component';
+import { FullScreenAlbumComponent } from './full-screen-album/full-screen-album.component';
 
 export function apiConfigFactory(): Configuration {
     const params: ConfigurationParameters = {
@@ -31,7 +32,8 @@ export function apiConfigFactory(): Configuration {
         HomeComponent,
         FooterComponent,
         ResizePhotosComponent,
-        ScreenManagementComponent
+        ScreenManagementComponent,
+        FullScreenAlbumComponent
     ],
     imports: [
         ApiModule.forRoot(apiConfigFactory),

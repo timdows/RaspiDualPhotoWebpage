@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { ControlService } from './api/control.service';
+import { FullScreenAlbumService } from './api/fullScreenAlbum.service';
 import { ImageManagementService } from './api/imageManagement.service';
 import { ImagesService } from './api/images.service';
 
@@ -13,6 +14,7 @@ import { ImagesService } from './api/images.service';
   exports:      [],
   providers: [
     ControlService,
+    FullScreenAlbumService,
     ImageManagementService,
     ImagesService ]
 })

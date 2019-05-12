@@ -1,1 +1,17 @@
-p hoiasdf
+.wrapper
+  .main
+    .section
+      .container
+        h3.title Album op volledig scherm
+        .row
+          .col-md-12
+            table.table-bordered.table-striped
+              tr
+                th Album naam
+                th Aantal foto's
+                th Thumbnail
+              tr(*ngFor="let albumInfo of albumsInfo")
+                td {{albumInfo.name}}
+                td {{albumInfo.imageCount}}
+                td
+                  img([src]="albumInfo.thumbnailUrl")

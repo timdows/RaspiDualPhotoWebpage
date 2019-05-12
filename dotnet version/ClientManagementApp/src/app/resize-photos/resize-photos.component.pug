@@ -30,6 +30,5 @@
                     div(*ngIf="!displayImage.isResized") Nope
                   ng-container(*ngIf="displayImage.isResizing")
                     i.fa.fa-cog.fa-spin
-                td 
-                  ng-container(*ngIf="showThumbs")
-                    img(*ngIf="displayImage.isResized", [src]="displayImage.thumbnailUrl")
+                td(*ngIf="showThumbs")
+                  img(*ngIf="displayImage.isResized", [src]="displayImage.thumbnailUrl")

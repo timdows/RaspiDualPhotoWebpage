@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FullScreenAlbumService } from 'api/api/fullScreenAlbum.service';
+import { AlbumInfo } from 'api/model/albumInfo';
 
 @Component({
 	selector: 'app-full-screen-album',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FullScreenAlbumComponent implements OnInit {
 
-	constructor() { }
+	albumsInfo: Array<AlbumInfo>;
+
+	constructor(private fullScreenAlbumService: FullScreenAlbumService) { }
 
 	ngOnInit() {
+		this.getOverview();
 	}
 
+	getOverview() {
+		this.fullScreenAlbumService.getAlbums()
+			.subscribe(data => {
+				this.albumsInfo = data;
+			});
+	}
 }

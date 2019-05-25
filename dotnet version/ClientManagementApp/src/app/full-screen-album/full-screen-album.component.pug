@@ -10,8 +10,11 @@
                 th Album naam
                 th Aantal foto's
                 th Thumbnail
+                th Actie
               tr(*ngFor="let albumInfo of albumsInfo")
                 td {{albumInfo.name}}
                 td {{albumInfo.imageCount}}
                 td
                   img([src]="albumInfo.thumbnailUrl")
+                td
+                  button.btn.btn-primary Toon full screen

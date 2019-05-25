@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Runtime.InteropServices;
 
 namespace RaspiDualPhotoWebpage.Controllers
 {
@@ -18,19 +19,32 @@ namespace RaspiDualPhotoWebpage.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetCountdown()
+		public IActionResult GetControlDetails()
+		{
+			var secondsLeft = GetSecondsLeft();
+			var displayFullScreen = false;
+
+			return Ok(new
+			{
+				secondsLeft,
+				displayFullScreen
+			});
+		}
+
+		private int GetSecondsLeft()
 		{
 			var displayOnTimer = _appSettings.DisplayOnTimer;
 			var secondsRunning = Convert.ToInt32((DateTime.Now - _countdownTimer.DateTimeStarted).TotalSeconds);
 
 			var secondsLeft = displayOnTimer - secondsRunning;
 
-			if (secondsLeft <= 0)
+			var isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+			if (secondsLeft <= 0 && isLinux)
 			{
 				var output = "vcgencmd display_power 0".Bash();
 			}
 
-			return Ok(secondsLeft);
+			return secondsLeft;
 		}
 
 		[HttpGet]

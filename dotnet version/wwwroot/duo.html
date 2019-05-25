@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Quatro pictures</title>
+    <title>Duo pictures</title>
     
     <style>
         @font-face {
@@ -184,11 +184,21 @@
         setInterval(() => {
             changeImage();
         }, 7500);
+
+        setInterval(() => {
+            getControlInfo();
+        }, 1000);
     });
 
     function getImages() {
         $.getJSON('api/images/getimages', function (data) {
             images = data;
+        });
+    }
+
+    function getControlInfo() {
+        $.getJSON('api/control/GetControlDetails', function (data) {
+            console.log(data);
         });
     }
 

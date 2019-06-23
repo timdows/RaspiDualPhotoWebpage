@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Duo pictures</title>
-    
+
     <style>
         @font-face {
             font-family: "Roboto";
@@ -12,20 +12,20 @@
             font-weight: 100;
             font-style: normal;
         }
-
+        
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: black;
         }
-
+        
         .loader {
             left: 50%;
             top: 45%;
             position: absolute;
         }
-
+        
         .lds-heart {
             display: inline-block;
             position: relative;
@@ -34,7 +34,7 @@
             transform: rotate(45deg);
             transform-origin: 32px 32px;
         }
-
+        
         .lds-heart div {
             top: 23px;
             left: 19px;
@@ -44,7 +44,7 @@
             background: #fff;
             animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
         }
-
+        
         .lds-heart div:after,
         .lds-heart div:before {
             content: " ";
@@ -54,50 +54,45 @@
             height: 26px;
             background: #fff;
         }
-
+        
         .lds-heart div:before {
             left: -17px;
             border-radius: 50% 0 0 50%;
         }
-
+        
         .lds-heart div:after {
             top: -17px;
             border-radius: 50% 50% 0 0;
         }
-
+        
         @keyframes lds-heart {
             0% {
                 transform: scale(0.95);
             }
-
             5% {
                 transform: scale(1.1);
             }
-
             39% {
                 transform: scale(0.85);
             }
-
             45% {
                 transform: scale(1);
             }
-
             60% {
                 transform: scale(0.95);
             }
-
             100% {
                 transform: scale(0.9);
             }
         }
-
+        
         .duo-row {
             background-color: black;
             height: calc(50vh - 5px);
             /* display: flex; */
             display: none;
         }
-
+        
         .duo-row>.image-container {
             flex: 50%;
             display: flex;
@@ -105,7 +100,7 @@
             justify-content: center;
             flex-direction: column;
         }
-
+        
         .duo-row>.image-container>.image {
             height: 95%;
             max-width: 100%;
@@ -113,11 +108,11 @@
             background-repeat: no-repeat;
             background-size: contain;
         }
-
+        
         .duo-row>.image-container>.imageBackgroundCover {
             background-size: cover;
         }
-
+        
         .duo-row>.image-container .imageText {
             height: 5%;
             width: 100%;
@@ -127,17 +122,17 @@
             align-content: center;
             flex-direction: column;
         }
-
+        
         .duo-row>.image-container .imageText>h3 {
             margin: 0;
             color: white;
             text-align: center;
         }
-
+        
         .duo-row .countdown {
             position: fixed;
             bottom: 0%;
-            left: 0%;
+            right: 0%;
             color: white;
             font-size: x-small;
             padding-right: 0.5rem;
@@ -169,11 +164,12 @@
                 <h3>Loading...</h3>
             </div>
         </div>
+        <div class="countdown">Loading...</div>
     </div>
 </body>
 <script type="text/javascript">
     let images = Array();
-    $.getJSON('api/images/getimages', function (data) {
+    $.getJSON('api/images/getimages', function(data) {
         images = data;
         $(".loader").css("display", "none");
         $(".duo-row").css("display", "flex");
@@ -191,19 +187,21 @@
     });
 
     function getImages() {
-        $.getJSON('api/images/getimages', function (data) {
+        $.getJSON('api/images/getimages', function(data) {
             images = data;
         });
     }
 
     function getControlInfo() {
-        $.getJSON('api/control/GetControlDetails', function (data) {
+        $.getJSON('api/control/GetControlDetails', function(data) {
             console.log(data);
+            $(".countdown").html(data.secondsLeftForDisplay);
         });
     }
 
     let imageIndex = 0;
     let containerIndex = 1;
+
     function changeImage() {
         let containerName = "image" + containerIndex.toString();
         let imageContainer = $("#" + containerName + " > .image");
@@ -212,11 +210,10 @@
         image.src = images[imageIndex].url;
         imageContainer.css("background-image", "url(" + images[imageIndex].url + ")");
 
-        $(image).one('load', function () {
+        $(image).one('load', function() {
             if (image.width > image.height) {
                 imageContainer.css("background-size", "cover");
-            }
-            else {
+            } else {
                 imageContainer.css("background-size", "contain");
             }
         });

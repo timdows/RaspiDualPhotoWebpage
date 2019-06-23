@@ -22,11 +22,13 @@ namespace RaspiDualPhotoWebpage.Controllers
 		public IActionResult GetControlDetails()
 		{
 			var secondsLeft = GetSecondsLeft();
+			var secondsLeftForDisplay = TimeSpan.FromSeconds(secondsLeft).ToString("mm\\:ss");
 			var displayFullScreen = false;
 
 			return Ok(new
 			{
 				secondsLeft,
+				secondsLeftForDisplay,
 				displayFullScreen
 			});
 		}

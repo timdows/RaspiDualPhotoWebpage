@@ -129,7 +129,7 @@
             text-align: center;
         }
         
-        .duo-row .countdown {
+        .duo-row .info {
             position: fixed;
             bottom: 0%;
             right: 0%;
@@ -164,7 +164,7 @@
                 <h3>Loading...</h3>
             </div>
         </div>
-        <div class="countdown">Loading...</div>
+        <div class="info">Loading...</div>
     </div>
 </body>
 <script type="text/javascript">
@@ -195,7 +195,7 @@
     function getControlInfo() {
         $.getJSON('api/control/GetControlDetails', function(data) {
             console.log(data);
-            $(".countdown").html(data.secondsLeftForDisplay);
+            $(".info").html(images.length + ' photos - ' + data.secondsLeftForDisplay);
         });
     }
 
